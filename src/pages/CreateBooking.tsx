@@ -26,5 +26,5 @@ export const CreateBooking = () => {
     fetchData();
   }, []);
 
-  return <div>Här ska en bokning komma</div>;
+  return <div>Här ska en {booking ? JSON.stringify(booking) : null} komma</div>;
 };
