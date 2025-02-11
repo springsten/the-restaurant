@@ -1,9 +1,11 @@
-.booking {
+.booking-container {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100vh;
+  background-color: white;
+  color: black;
+  height: calc(100vh - 100px);
 
   h1 {
     font-size: 28px;
