@@ -1,0 +1,59 @@
+.hero {
+  background: url("../assets/josh-wilburne-hPeGDIGHnoI-unsplash.jpg") center/cover no-repeat;  
+  height: 100vh;  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  position: relative; 
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+  }
+
+  .hero-content {
+    position: relative;
+    color: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 80%; 
+
+    h1 {
+      font-size: 40px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 18px;
+      max-width: 500px;
+      margin: 0 auto 20px auto;
+    }
+
+    .hero-button {
+      background-color: black;
+      color: white;
+      padding: 15px 25px;
+      font-size: 18px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      display: inline-block;
+      transition: 0.3s ease;
+
+      &:hover {
+        background-color: lightgray;
+        color: black;
+      }
+    }
+  }
+}

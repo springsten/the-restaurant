@@ -1,7 +1,10 @@
-export const Booking = () => {
+const Booking = () => {
   return (
-    <>
-      <h2></h2>
-    </>
+    <div>
+      <h1></h1>
+      <p></p>
+    </div>
   );
 };
+
+export default Booking;
