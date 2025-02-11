@@ -1,8 +1,6 @@
-import React from "react";
-
 const Booking = () => {
   return (
-    <div>
+    <div id="bookingdesign">
       <h1></h1>
       <p></p>
     </div>
