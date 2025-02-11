@@ -13,6 +13,16 @@
 //   }
 // }
 
-main {
-  text-align: center;
+#contact {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+
+  .contactheadline {
+    display: flex;
+  }
+
+  .contactlist {
+    display: flex;
+  }
 }
