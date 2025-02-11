@@ -1,0 +1,35 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: black;
+  color: white;
+
+  .logo {
+    font-size: 28px;
+    font-weight: bold;
+
+    .logo-highlight {
+      color: #e75c5c; 
+      font-weight: bold;
+    }
+  }
+
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+
+    li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: 0.3s;
+
+      &:hover {
+        color: lightgray;
+      }
+    }
+  }
+}

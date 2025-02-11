@@ -1,7 +1,10 @@
-export const Contact = () => {
+const Contact = () => {
   return (
-    <>
-      <h2>pip</h2>
-    </>
+    <div>
+      <h1></h1>
+      <p></p>
+    </div>
   );
 };
+
+export default Contact;
