@@ -1,14 +1,18 @@
-import React from "react";
+import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <div className="logo">
+      <Link className="logo" to="/">
         Mizu<span className="logo-highlight">スイ</span>
-      </div>
+      </Link>
       <ul>
-        <li><a href="/booking">Boka</a></li>
-        <li><a href="/contact">Kontakt</a></li>
+        <li>
+          <NavLink to={"/booking"}>Boka</NavLink>
+        </li>
+        <li>
+          <NavLink to={"/contact"}>Kontakt</NavLink>
+        </li>
       </ul>
     </nav>
   );
