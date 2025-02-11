@@ -1,5 +1,5 @@
-import { RouterProvider } from "react-router-dom";
-import router  from "./routes/Router";
+import { RouterProvider } from "react-router";
+import router from "./routes/Router";
 import "./styles/global.scss";
 import React from "react";
 
