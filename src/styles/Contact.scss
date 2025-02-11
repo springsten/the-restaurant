@@ -15,14 +15,25 @@
 
 #contact {
   display: flex;
-  flex-wrap: wrap;
-  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  gap: 1rem;
+  margin-top: 2rem;
+  
 
   .contactheadline {
     display: flex;
+    
   }
 
   .contactlist {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    width: 50%;
+  
   }
 }
