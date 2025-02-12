@@ -15,6 +15,109 @@
 
 .container {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
+  justify-content: flex-start;
   height: 100vh;
+
+  #contactblock {
+    
+
+    .contactheadline {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+     
+    }
+
+    .contactinformationlist {
+      display: flex;
+      justify-content: center;
+      
+      .information_list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1rem;
+
+        .information_item {
+          display: flex;
+          justify-content: space-between;
+          list-style: none;
+          gap: 3rem;
+
+          .information_list_label {
+
+            a {
+              color: white;
+              text-decoration: none;
+              transition:  color 0.3s;
+            }
+          }
+
+          .information_list_value {
+            
+            a {
+              color: white;
+              text-decoration: none;
+              transition:  color 0.3s;
+              
+              &:hover {
+                color: gray;
+              }
+            }
+          }
+        }
+       
+      }
+    }
+  }
+
+  #integritblock {
+    display: flex;
+    justify-content: center;
+   
+  }
+
+  #solicalblock {
+
+
+    .social {
+
+      .socialheadline {
+        display: flex;
+        justify-content: center;
+       
+      }
+    }
+
+    #socialicons {
+      display: flex;
+      justify-content: center;
+    
+    }
+    
+  }
+
+  #openinghoursblock{
+  
+    .openingheadline {
+      display: flex;
+      justify-content: center;
+     
+    }
+
+    #openinghours {
+      display: flex;
+      justify-content: center;
+      
+      .info_list {
+
+        .info_item {
+          list-style: none;
+        }
+      }
+    }
+  }
 }
