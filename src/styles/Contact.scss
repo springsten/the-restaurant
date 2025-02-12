@@ -64,9 +64,7 @@
               transition:  color 0.3s;
               
               &:hover {
-                color: gray;
-                
-                background-color: antiquewhite;
+                color: #e75c5c;
               }
             }
           }
@@ -79,7 +77,21 @@
   #integritblock {
     display: flex;
     justify-content: center;
-   
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    
+    .integritetpolicy {
+      
+      a {
+        color: white;
+        text-decoration: none;
+        transition:  color 0.3s;
+              
+        &:hover {
+          color: #e75c5c;
+        }
+      }
+    }
   }
 
   #solicalblock {
@@ -90,6 +102,7 @@
       .socialheadline {
         display: flex;
         justify-content: center;
+        margin-bottom: 1rem;
        
       }
     }
@@ -97,29 +110,58 @@
     #socialicons {
       display: flex;
       justify-content: center;
-    
+      font-size: 3rem;
+
+
+      .social_icons {
+        margin-bottom: 1rem;
+        display: flex;
+        gap: 1rem;
+
+        i {
+          color: white;
+
+          &:hover {
+            color: #e75c5c;
+          }
+        }
+      }    
     }
     
   }
 
   #openinghoursblock{
-  
-    .openingheadline {
-      display: flex;
-      justify-content: center;
-     
-    }
+    display: flex;
+    justify-content: center;
 
-    #openinghours {
-      display: flex;
-      justify-content: center;
+    .openingandclose {
       
-      .info_list {
-
-        .info_item {
-          list-style: none;
+      .openingheadline {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+        margin-top: 1rem;       
+      }
+  
+      #openinghours {
+        display: flex;
+        justify-content: center;
+        width: 50vh;       
+        
+        .info_list {
+          display: flex;
+          flex-direction: column;
+  
+          .info_item {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            gap: 5rem;
+            margin: 2px;
+          }
         }
       }
     }
+
   }
 }
