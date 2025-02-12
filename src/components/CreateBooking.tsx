@@ -17,6 +17,7 @@ interface IBooking {
 }
 
 export const CreateBooking = () => {
+  // state för vårt bokningsobjekt:
   const [bookingData, setBookingData] = useState<IBooking>({
     restaurantId: RESTAURANT_ID,
     date: "",
@@ -30,10 +31,11 @@ export const CreateBooking = () => {
     },
   });
 
+  // hanterar val av antal gäster:
   const [isGuestSelected, setIsGuestSelected] = useState(false);
   const guests = [1, 2, 3, 4, 5, 6];
 
-  const handleGuestSelection = (num) => {
+  const handleGuestSelection = (num: number) => {
     setBookingData((prev) => ({
       ...prev,
       numberOfGuests: num,
@@ -46,20 +48,35 @@ export const CreateBooking = () => {
     console.table(bookingData);
   }, [bookingData]);
 
+  // väljer datum:
   const [value, setValue] = useState(new Date());
-
   function onChange(userDate: Date) {
     setValue(userDate);
     setBookingData((prev) => ({
       ...prev,
       date: userDate.toISOString().split("T")[0],
     }));
+    setIsDateSelected(true);
     console.log(bookingData);
   }
 
+  // kollar så att användaren valt datum:
+  const [isDateSelected, setIsDateSelected] = useState(false);
+
+  // hanterar val av tid:
+  const timeSlots = ["18:00", "21:00"];
+  const handleTimeSlotSelection = (timeSlot: string) => {
+    setBookingData((prev) => ({
+      ...prev,
+      time: timeSlot,
+    }));
+    console.table(bookingData);
+  };
+
   return (
     <>
-      <div className="select-guests">
+      {/* visar lista med val för antal gäster */}
+      <div className="select-container">
         <h2 className="booking-heading">Välj antal gäster</h2>
         <ul className="guest-list">
           {guests.map((num) => (
@@ -82,10 +99,39 @@ export const CreateBooking = () => {
         </ul>
       </div>
 
+      {/* visar kalender så att användaren kan välja datum */}
       {isGuestSelected && (
-        <div className="select-date">
+        <div className="select-container">
           <h2 className="booking-heading">Välj datum</h2>
           <Calendar onChange={onChange} value={value} />
+        </div>
+      )}
+
+      {/* visar timeslots för sittning när användaren valt datum */}
+      {isDateSelected && (
+        <div className="select-container">
+          <ul className="timeslot-list">
+            {timeSlots.map((timeSlot) => (
+              <li
+                tabIndex={0}
+                key={timeSlot}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && handleTimeSlotSelection(timeSlot)
+                }
+                role="button"
+                className="timeslot-item"
+                onClick={() => handleTimeSlotSelection(timeSlot)}
+              >
+                {timeSlot}
+                <button
+                  className="book-reservation"
+                  onClick={() => handleTimeSlotSelection(timeSlot)}
+                >
+                  Boka
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </>
