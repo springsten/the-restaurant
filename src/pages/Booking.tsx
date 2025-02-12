@@ -1,3 +1,5 @@
+import { CreateBooking } from "../components/CreateBooking";
+
 interface ICustomer {
   name: string;
   email: string;
@@ -19,6 +21,7 @@ const Booking = () => {
     <>
       <section className="booking-container">
         <h1 className="booking-header">Gör en bokning</h1>
+        <CreateBooking />
       </section>
     </>
   );
