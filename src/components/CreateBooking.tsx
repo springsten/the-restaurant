@@ -48,8 +48,13 @@ export const CreateBooking = () => {
 
   const [value, setValue] = useState(new Date());
 
-  function onChange(nextValue) {
-    setValue(nextValue);
+  function onChange(userDate: Date) {
+    setValue(userDate);
+    setBookingData((prev) => ({
+      ...prev,
+      date: userDate.toISOString().split("T")[0],
+    }));
+    console.log(bookingData);
   }
 
   return (
