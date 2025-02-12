@@ -3,14 +3,13 @@ import { IBooking } from "../models/IBooking";
 export const BASE_URL = "https://school-restaurant-api.azurewebsites.net";
 export const RESTAURANT_ID = "67ab206b6c6da27544081a1d";
 
-export const createBooking = async (bookingData) => {
+export const createBooking = async (bookingData: IBooking) => {
   const response = await fetch(`${BASE_URL}/booking/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      restaurantId: RESTAURANT_ID,
       ...bookingData,
     }),
   });

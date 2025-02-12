@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { RESTAURANT_ID } from "../services/bookingServices";
+import { createBooking, RESTAURANT_ID } from "../services/bookingServices";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -17,7 +17,9 @@ interface IBooking {
 }
 
 export const CreateBooking = () => {
-  // state för vårt bokningsobjekt:
+  const [isGuestSelected, setIsGuestSelected] = useState(false);
+  const [isDateSelected, setIsDateSelected] = useState(false);
+  const [isTimeSelected, setIsTimeSelected] = useState(false);
   const [bookingData, setBookingData] = useState<IBooking>({
     restaurantId: RESTAURANT_ID,
     date: "",
@@ -32,7 +34,6 @@ export const CreateBooking = () => {
   });
 
   // hanterar val av antal gäster:
-  const [isGuestSelected, setIsGuestSelected] = useState(false);
   const guests = [1, 2, 3, 4, 5, 6];
 
   const handleGuestSelection = (num: number) => {
@@ -43,25 +44,19 @@ export const CreateBooking = () => {
     setIsGuestSelected(true);
   };
 
-  // kontrollera att numberOfGuests ändras:
-  useEffect(() => {
-    console.table(bookingData);
-  }, [bookingData]);
-
   // väljer datum:
-  const [value, setValue] = useState(new Date());
-  function onChange(userDate: Date) {
-    setValue(userDate);
+  const [calendarValue, setCalendarValue] = useState(new Date());
+  const onChange = (userDate: Date) => {
+    setCalendarValue(userDate);
+    const formattedDate = userDate.toLocaleDateString("sv-SE");
     setBookingData((prev) => ({
       ...prev,
-      date: userDate.toISOString().split("T")[0],
+      date: formattedDate,
     }));
     setIsDateSelected(true);
-    console.log(bookingData);
-  }
+  };
 
   // kollar så att användaren valt datum:
-  const [isDateSelected, setIsDateSelected] = useState(false);
 
   // hanterar val av tid:
   const timeSlots = ["18:00", "21:00"];
@@ -70,8 +65,29 @@ export const CreateBooking = () => {
       ...prev,
       time: timeSlot,
     }));
-    console.table(bookingData);
+    setIsTimeSelected(true);
   };
+
+  // hanterar användarforumläret:
+  const handleCustomerInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setBookingData((prev) => ({
+      ...prev,
+      customer: {
+        ...prev.customer,
+        [name]: value,
+      },
+    }));
+  };
+
+  const handleSubmit = async () => {
+    const response = await createBooking(bookingData);
+    console.log("Bokningen skapades:", response);
+  };
+
+  // useEffect(() => {
+  //   console.log("Uppdaterad bookingData:", bookingData);
+  // }, [bookingData]);
 
   return (
     <>
@@ -103,13 +119,14 @@ export const CreateBooking = () => {
       {isGuestSelected && (
         <div className="select-container">
           <h2 className="booking-heading">Välj datum</h2>
-          <Calendar onChange={onChange} value={value} />
+          <Calendar onChange={onChange} value={calendarValue} />
         </div>
       )}
 
       {/* visar timeslots för sittning när användaren valt datum */}
       {isDateSelected && (
         <div className="select-container">
+          <h2 className="booking-heading">Välj tid för sittning</h2>
           <ul className="timeslot-list">
             {timeSlots.map((timeSlot) => (
               <li
@@ -132,6 +149,48 @@ export const CreateBooking = () => {
               </li>
             ))}
           </ul>
+        </div>
+      )}
+
+      {/* samlar in information om gästen */}
+      {isTimeSelected && (
+        <div className="select-container">
+          <h2 className="booking-heading">Fyll i dina uppgifter</h2>
+          <form className="customer-form">
+            <div className="customer-input">
+              <input
+                type="text"
+                name="name"
+                placeholder="Förnamn"
+                onChange={handleCustomerInput}
+              />
+              <input
+                type="text"
+                name="lastname"
+                placeholder="Efternamn"
+                onChange={handleCustomerInput}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="din@epost.com"
+                onChange={handleCustomerInput}
+              />
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Telefonnummer"
+                onChange={handleCustomerInput}
+              />
+            </div>
+            <button
+              type="button"
+              className="confirm-booking"
+              onClick={handleSubmit}
+            >
+              Bekräfta bokning
+            </button>
+          </form>
         </div>
       )}
     </>

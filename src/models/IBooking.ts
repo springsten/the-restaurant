@@ -1,7 +1,7 @@
 import { ICustomer } from "./ICustomer";
 
 export interface IBooking {
-  id: string;
+  id?: string;
   restaurantId: string;
   date: string;
   time: string;

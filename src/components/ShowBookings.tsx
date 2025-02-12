@@ -12,7 +12,8 @@ const ShowBookings = () => {
       try {
         setIsLoading(true);
         const data = await getBookings();
-        setBookings(data);
+        console.log("Hämtade bokningar:", data);
+        setBookings(data.reverse());
       } catch (err) {
         console.error("Kunde inte ladda bokningar: ", err);
         setError("Kunde inte ladda bokningar");
@@ -34,6 +35,8 @@ const ShowBookings = () => {
       {bookings.map((booking) => (
         <div key={booking.id}>
           <h3>Bokning:</h3>
+          <p>{booking.customer?.name || "Inget namn"}</p>
+          <p>{booking.customer?.lastname || "Inget efternamn"}</p>
           <p>Datum: {booking.date}</p>
           <p>Tid: {booking.time}</p>
           <p>Antal gäster:{booking.numberOfGuests}</p>
