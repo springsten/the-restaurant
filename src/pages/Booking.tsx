@@ -1,9 +1,12 @@
+import { CreateBooking } from "../components/CreateBooking";
+
 const Booking = () => {
   return (
-    <div id="bookingdesign">
-      <h1></h1>
-      <p></p>
-    </div>
+    <>
+      <section className="booking-container">
+        <CreateBooking />
+      </section>
+    </>
   );
 };
 
