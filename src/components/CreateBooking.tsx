@@ -17,9 +17,11 @@ interface IBooking {
 }
 
 export const CreateBooking = () => {
+  // state som kollar så att användaren har tagit sig igenom föregående steg i processen:
   const [isGuestSelected, setIsGuestSelected] = useState(false);
   const [isDateSelected, setIsDateSelected] = useState(false);
   const [isTimeSelected, setIsTimeSelected] = useState(false);
+  // state
   const [bookingData, setBookingData] = useState<IBooking>({
     restaurantId: RESTAURANT_ID,
     date: "",
@@ -49,14 +51,13 @@ export const CreateBooking = () => {
   const onChange = (userDate: Date) => {
     setCalendarValue(userDate);
     const formattedDate = userDate.toLocaleDateString("sv-SE");
+
     setBookingData((prev) => ({
       ...prev,
       date: formattedDate,
     }));
     setIsDateSelected(true);
   };
-
-  // kollar så att användaren valt datum:
 
   // hanterar val av tid:
   const timeSlots = ["18:00", "21:00"];
