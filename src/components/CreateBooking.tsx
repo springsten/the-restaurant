@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { createBooking, RESTAURANT_ID } from "../services/bookingServices";
+import {
+  createBooking,
+  getBookings,
+  RESTAURANT_ID,
+} from "../services/bookingServices";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -35,6 +39,9 @@ export const CreateBooking = () => {
     },
   });
 
+  const [bookings, setBookings] = useState<IBooking[]>([]);
+  const [loading, setLoading] = useState(false);
+
   // hanterar val av antal gäster:
   const guests = [1, 2, 3, 4, 5, 6];
 
@@ -48,7 +55,8 @@ export const CreateBooking = () => {
 
   // väljer datum:
   const [calendarValue, setCalendarValue] = useState(new Date());
-  const onChange = (userDate: Date) => {
+
+  const onChange = async (userDate: Date) => {
     setCalendarValue(userDate);
     const formattedDate = userDate.toLocaleDateString("sv-SE");
 
@@ -57,6 +65,30 @@ export const CreateBooking = () => {
       date: formattedDate,
     }));
     setIsDateSelected(true);
+
+    setLoading(true);
+    try {
+      const allBookings = await getBookings();
+      const filteredBookings = allBookings.filter(
+        (booking) => booking.date === formattedDate
+      );
+      setBookings(filteredBookings);
+    } catch (error) {
+      console.error("Kunde inte hämta bokningar (datum)", error);
+    }
+
+    setLoading(false);
+  };
+
+  const getAvailableTables = (timeSlot: string) => {
+    const maxTables = 15;
+
+    const bookingsForTime = bookings.filter((b) => b.time === timeSlot);
+    const bookedTables = Math.ceil(
+      bookingsForTime.reduce((sum, b) => sum + b.numberOfGuests, 0) / 6
+    );
+
+    return maxTables - bookedTables;
   };
 
   // hanterar val av tid:
@@ -128,27 +160,49 @@ export const CreateBooking = () => {
       {isDateSelected && (
         <div className="select-container">
           <h2 className="booking-heading">Välj tid för sittning</h2>
+
           <ul className="timeslot-list">
-            {timeSlots.map((timeSlot) => (
-              <li
-                tabIndex={0}
-                key={timeSlot}
-                onKeyDown={(e) =>
-                  e.key === "Enter" && handleTimeSlotSelection(timeSlot)
-                }
-                role="button"
-                className="timeslot-item"
-                onClick={() => handleTimeSlotSelection(timeSlot)}
-              >
-                {timeSlot}
-                <button
-                  className="book-reservation"
-                  onClick={() => handleTimeSlotSelection(timeSlot)}
+            {timeSlots.map((timeSlot) => {
+              const availableTables = getAvailableTables(timeSlot);
+              return (
+                <li
+                  tabIndex={0}
+                  key={timeSlot}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && handleTimeSlotSelection(timeSlot)
+                  }
+                  role="button"
+                  className={
+                    availableTables > 0
+                      ? "timeslot-item"
+                      : "timeslot-item fully-booked"
+                  }
+                  onClick={() =>
+                    availableTables > 0 && handleTimeSlotSelection(timeSlot)
+                  }
                 >
-                  Boka
-                </button>
-              </li>
-            ))}
+                  {timeSlot}
+                  <span className="available-tables">
+                    ({availableTables} lediga bord)
+                  </span>
+                  {availableTables === 0 && <span> - Fullbokat</span>}
+                  <button
+                    className={
+                      availableTables > 0
+                        ? "book-reservation"
+                        : "fully-booked-btn"
+                    }
+                    onClick={() =>
+                      availableTables > 0
+                        ? handleTimeSlotSelection(timeSlot)
+                        : alert("Inga lediga bord")
+                    }
+                  >
+                    Boka
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}

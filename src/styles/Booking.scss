@@ -61,7 +61,6 @@ h2 {
     color: white;
     font-size: 0.8rem;
     font-weight: 400;
-    cursor: pointer;
     text-transform: uppercase;
     transition: linear;
 
@@ -70,6 +69,31 @@ h2 {
       transition: 0.2s;
     }
   }
+}
+
+.fully-booked {
+  background-color: rgb(229, 229, 229);
+}
+
+.fully-booked-btn {
+  font-family: "Inter", sans serif;
+  cursor: not-allowed;
+  background-color: red;
+  padding: 5px;
+  min-width: 100px;
+  min-height: 30px;
+  border: 1px solid #c7c7c7;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  transition: linear;
+}
+
+.available-tables {
+  font-size: 1rem;
+  font-weight: 400;
+  color: grey;
 }
 
 .customer-form {
