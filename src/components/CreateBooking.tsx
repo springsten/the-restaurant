@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createBooking, RESTAURANT_ID } from "../services/bookingServices";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { BookingInfo } from "./BookingInfo";
 
 interface IBooking {
   restaurantId: string;
@@ -36,8 +37,6 @@ export const CreateBooking = () => {
   });
 
   // hanterar val av antal gäster:
-  const guests = [1, 2, 3, 4, 5, 6];
-
   const handleGuestSelection = (num: number) => {
     setBookingData((prev) => ({
       ...prev,
@@ -47,7 +46,7 @@ export const CreateBooking = () => {
   };
 
   // väljer datum:
-  const [calendarValue, setCalendarValue] = useState(new Date());
+  // const [calendarValue, setCalendarValue] = useState(new Date());
   const onChange = (userDate: Date) => {
     setCalendarValue(userDate);
     const formattedDate = userDate.toLocaleDateString("sv-SE");
@@ -60,7 +59,6 @@ export const CreateBooking = () => {
   };
 
   // hanterar val av tid:
-  const timeSlots = ["18:00", "21:00"];
   const handleTimeSlotSelection = (timeSlot: string) => {
     setBookingData((prev) => ({
       ...prev,
@@ -92,66 +90,11 @@ export const CreateBooking = () => {
 
   return (
     <>
-      {/* visar lista med val för antal gäster */}
-      <div className="select-container">
-        <h2 className="booking-heading">Välj antal gäster</h2>
-        <ul className="guest-list">
-          {guests.map((num) => (
-            <li
-              tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && handleGuestSelection(num)}
-              role="button"
-              key={num}
-              className="guest-item"
-              style={{
-                backgroundColor:
-                  bookingData.numberOfGuests === num ? "#eee" : "white",
-                fontWeight: bookingData.numberOfGuests === num ? "500" : "300",
-              }}
-              onClick={() => handleGuestSelection(num)}
-            >
-              {num} {num === 1 ? "gäst" : "gäster"}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* visar kalender så att användaren kan välja datum */}
-      {isGuestSelected && (
-        <div className="select-container">
-          <h2 className="booking-heading">Välj datum</h2>
-          <Calendar onChange={onChange} value={calendarValue} />
-        </div>
-      )}
-
-      {/* visar timeslots för sittning när användaren valt datum */}
-      {isDateSelected && (
-        <div className="select-container">
-          <h2 className="booking-heading">Välj tid för sittning</h2>
-          <ul className="timeslot-list">
-            {timeSlots.map((timeSlot) => (
-              <li
-                tabIndex={0}
-                key={timeSlot}
-                onKeyDown={(e) =>
-                  e.key === "Enter" && handleTimeSlotSelection(timeSlot)
-                }
-                role="button"
-                className="timeslot-item"
-                onClick={() => handleTimeSlotSelection(timeSlot)}
-              >
-                {timeSlot}
-                <button
-                  className="book-reservation"
-                  onClick={() => handleTimeSlotSelection(timeSlot)}
-                >
-                  Boka
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <BookingInfo
+        onGuestSelect={handleGuestSelection}
+        onDateSelect={onChange}
+        onTimeSelect={handleTimeSlotSelection}
+      ></BookingInfo>
 
       {/* samlar in information om gästen */}
       {isTimeSelected && (
