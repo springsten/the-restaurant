@@ -183,9 +183,10 @@ export const CreateBooking = () => {
                 >
                   {timeSlot}
                   <span className="available-tables">
-                    ({availableTables} lediga bord)
+                    {availableTables > 0
+                      ? availableTables + " lediga bord"
+                      : "Fullbokat"}
                   </span>
-                  {availableTables === 0 && <span> - Fullbokat</span>}
                   <button
                     className={
                       availableTables > 0
@@ -197,6 +198,7 @@ export const CreateBooking = () => {
                         ? handleTimeSlotSelection(timeSlot)
                         : alert("Inga lediga bord")
                     }
+                    disabled={availableTables < 0}
                   >
                     Boka
                   </button>
