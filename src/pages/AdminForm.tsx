@@ -9,7 +9,7 @@ function AdminForm({ dispatch, editingBooking }: { dispatch: any, editingBooking
     lastname: "",
     date: "",
     time: "",
-    numberOfGuests: "1", // Standardvärde för antal gäster
+    numberOfGuests: "1", // Standardvärde för antal gästee
   });
 
   // useEffect uppdaterar formuläret om en bokning ska redigeras
