@@ -1,10 +1,7 @@
 import { IBooking } from "../models/IBooking";
+import { IAdminAction } from "../models/IAdminAction"; // Importera action-interfacet
 
-interface IAdminAction {
-  type: string; 
-  payload: string;
-}
-
+// Reducer-funktion som hanterar state för admin-bokningar
 export const adminReducer = (state: IBooking[], action: IAdminAction): IBooking[] => {
   switch (action.type) {
     case "SET_BOOKINGS": {

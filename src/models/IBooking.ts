@@ -1,10 +1,13 @@
-import { ICustomer } from "./ICustomer";
-
 export interface IBooking {
-  id?: string;
-  restaurantId: string;
+  id: string;
+  customer: {
+    name: string;
+    lastname: string;
+    email: string;
+    phone: string;
+  };
   date: string;
   time: string;
   numberOfGuests: number;
-  customer: ICustomer;
+  restaurantId: string;
 }

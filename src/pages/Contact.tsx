@@ -37,7 +37,7 @@ const Contact = () => {
           </div>
         </div>
         <div id="socialicons">
-          <div className="socialicons">
+          <div className="social_icons">
             <a href="" target="_blank" rel="noopener noreferrer">
               <i className="fa-brands fa-github"></i>
             </a>
