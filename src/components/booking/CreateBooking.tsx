@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   createBooking,
   getBookings,
@@ -124,6 +124,7 @@ export const CreateBooking = () => {
 
   return (
     <>
+      {/* väljer antal gäster */}
       <GuestSelection
         selectedGuests={bookingData.numberOfGuests}
         onGuestSelect={handleGuestSelection}
@@ -147,10 +148,12 @@ export const CreateBooking = () => {
         />
       )}
 
-      {/* samlar in information om gästen */}
+      {/* visar en summering över användarens val */}
       {isTimeSelected && (
         <div className="select-container">
           <BookingSummary bookingData={bookingData} />
+
+          {/* samlar in information om gästen */}
           <h2 className="booking-heading">Fyll i dina uppgifter</h2>
           <form className="customer-form">
             <div className="customer-input">
