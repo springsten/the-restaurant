@@ -8,6 +8,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { GuestSelection } from "./GuestSelection";
 import { TimeSelection } from "./TimeSelection";
+import { BookingSummary } from "./BookingSummary";
 
 interface IBooking {
   restaurantId: string;
@@ -149,13 +150,7 @@ export const CreateBooking = () => {
       {/* samlar in information om gästen */}
       {isTimeSelected && (
         <div className="select-container">
-          <div className="booking-summary">
-            <p>
-              Du har valt ett bord för {bookingData.numberOfGuests}{" "}
-              {bookingData.numberOfGuests === 1 ? "gäst" : "gäster"} den{" "}
-              {bookingData.date} klockan {bookingData.time}
-            </p>
-          </div>
+          <BookingSummary bookingData={bookingData} />
           <h2 className="booking-heading">Fyll i dina uppgifter</h2>
           <form className="customer-form">
             <div className="customer-input">
