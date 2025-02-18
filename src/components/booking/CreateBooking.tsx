@@ -9,6 +9,7 @@ import "react-calendar/dist/Calendar.css";
 import { GuestSelection } from "./GuestSelection";
 import { TimeSelection } from "./TimeSelection";
 import { BookingSummary } from "./BookingSummary";
+import { CustomerForm } from "./CustomerForm";
 
 interface IBooking {
   restaurantId: string;
@@ -101,26 +102,17 @@ export const CreateBooking = () => {
     setIsTimeSelected(true);
   };
 
-  // hanterar användarforumläret:
-  const handleCustomerInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setBookingData((prev) => ({
-      ...prev,
-      customer: {
-        ...prev.customer,
-        [name]: value,
-      },
-    }));
-  };
-
+  // Hantera formulärets inlämning
   const handleSubmit = async () => {
     const response = await createBooking(bookingData);
     console.log("Bokningen skapades:", response);
   };
 
-  // useEffect(() => {
-  //   console.log("Uppdaterad bookingData:", bookingData);
-  // }, [bookingData]);
+  // Funktion för att ta emot uppdaterad kundinformation
+  const handleCustomerFormSubmit = (updatedBookingData: IBooking) => {
+    setBookingData(updatedBookingData);
+    handleSubmit(); // Skicka bokningen när kunddata är ifylld
+  };
 
   return (
     <>
@@ -154,42 +146,10 @@ export const CreateBooking = () => {
           <BookingSummary bookingData={bookingData} />
 
           {/* samlar in information om gästen */}
-          <h2 className="booking-heading">Fyll i dina uppgifter</h2>
-          <form className="customer-form">
-            <div className="customer-input">
-              <input
-                type="text"
-                name="name"
-                placeholder="Förnamn"
-                onChange={handleCustomerInput}
-              />
-              <input
-                type="text"
-                name="lastname"
-                placeholder="Efternamn"
-                onChange={handleCustomerInput}
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="din@epost.com"
-                onChange={handleCustomerInput}
-              />
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Telefonnummer"
-                onChange={handleCustomerInput}
-              />
-            </div>
-            <button
-              type="button"
-              className="confirm-booking"
-              onClick={handleSubmit}
-            >
-              Bekräfta bokning
-            </button>
-          </form>
+          <CustomerForm
+            bookingData={bookingData}
+            handleSubmitForm={handleCustomerFormSubmit} // Skicka handleSubmitForm till CustomerForm
+          />
         </div>
       )}
     </>
