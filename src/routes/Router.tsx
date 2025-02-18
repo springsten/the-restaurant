@@ -3,7 +3,7 @@ import Layout from "../layout/Layout";
 import Booking from "../pages/Booking";
 import Contact from "../pages/Contact";
 import Home from "../pages/Home";
-import Admin from "../pages/Admin";
+import AdminDashboard from "../pages/AdminDashboard";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/booking", element: <Booking /> },
       { path: "/contact", element: <Contact /> },
-      { path: "/admin", element: <Admin /> },
+      { path: "/admin", element: <AdminDashboard /> },
     ],
   },
 ]);

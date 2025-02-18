@@ -1,12 +1,8 @@
+import AdminDashboard from "../pages/AdminDashboard";
 import "./../styles/Admin.scss";
+
 const Admin = () => {
-  return (
-    <>
-      <div>
-        <h1>Admin sida </h1>
-      </div>
-    </>
-  );
+  return <AdminDashboard />;
 };
 
 export default Admin;
