@@ -47,9 +47,9 @@ export const CreateBooking = () => {
 
   // väljer datum:
   // const [calendarValue, setCalendarValue] = useState(new Date());
-  const onChange = (userDate: Date) => {
-    setCalendarValue(userDate);
-    const formattedDate = userDate.toLocaleDateString("sv-SE");
+  const handleDateSelect = (date: Date) => {
+    // setCalendarValue(userDate);
+    const formattedDate = date.toLocaleDateString("sv-SE");
 
     setBookingData((prev) => ({
       ...prev,
@@ -91,8 +91,9 @@ export const CreateBooking = () => {
   return (
     <>
       <BookingInfo
+        bookingData={bookingData}
         onGuestSelect={handleGuestSelection}
-        onDateSelect={onChange}
+        onDateSelect={handleDateSelect}
         onTimeSelect={handleTimeSlotSelection}
       ></BookingInfo>
 

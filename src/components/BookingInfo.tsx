@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
+import { Value } from "react-calendar/src/shared/types.js";
 
 interface IBookingInfoProps {
   //   guests: number[]; // En array m. tillgängliga antal gäster
@@ -10,7 +11,7 @@ interface IBookingInfoProps {
     time: string; // Tid som användaren har valt
   };
   onGuestSelect: (num: number) => void; // Funktion som hanterar val av antal gäster
-  onDateSelect: (date: string) => void; // hanterar val av datum
+  onDateSelect: (date: Date) => void; // hanterar val av datum
   onTimeSelect: (time: string) => void; // hanterar val av tid
 }
 
@@ -20,15 +21,31 @@ const guests = [1, 2, 3, 4, 5, 6];
 // hanterar val av tid:
 const timeSlots = ["18:00", "21:00"];
 
-// väljer datum:
-const [calendarValue, setCalendarValue] = useState(new Date());
-
 export const BookingInfo = ({
   bookingData,
   onGuestSelect,
   onDateSelect,
   onTimeSelect,
 }: IBookingInfoProps) => {
+  // väljer datum:
+  const [calendarValue, setCalendarValue] = useState(new Date());
+
+  useEffect(() => {
+    if (bookingData.date) {
+      const dateObject = new Date(bookingData.date); // Omvandla sträng till Dateobject! HOPPAS
+      setCalendarValue(dateObject);
+    }
+  }, [bookingData.date]);
+
+  const handleDateChange = (userDate: Value) => {
+    if (userDate instanceof Date && !isNaN(userDate.getTime())) {
+      setCalendarValue(userDate);
+      onDateSelect(userDate);
+    } else {
+      console.log("Ogiltigt datum valt");
+    }
+  };
+
   return (
     <>
       {/* visar lista med val för antal gäster */}
@@ -59,15 +76,7 @@ export const BookingInfo = ({
       {bookingData.numberOfGuests > 0 && (
         <div className="select-container">
           <h2 className="booking-heading">Välj datum</h2>
-          <Calendar
-            value={calendarValue}
-            onChange={(userDate) => {
-              if (userDate) onDateSelect(userDate);
-              else {
-                console.log("Ogiltigt datum valt");
-              }
-            }}
-          />
+          <Calendar value={calendarValue} onChange={handleDateChange} />
         </div>
       )}
 
