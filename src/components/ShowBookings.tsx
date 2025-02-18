@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { IBookingResponse, ICustomer } from "../models/IBooking";
+import { IBookingResponse } from "../models/IBookingResponse";
 import { getBookings, getCustomer } from "../services/bookingServices";
+import { ICustomer } from "../models/ICustomer";
 
 const ShowBookings = () => {
   const [bookings, setBookings] = useState<
