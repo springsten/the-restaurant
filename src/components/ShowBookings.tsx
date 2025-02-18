@@ -1,19 +1,28 @@
 import { useEffect, useState } from "react";
-import { IBooking } from "../models/IBooking";
-import { getBookings } from "../services/bookingServices";
+import { IBookingResponse, ICustomer } from "../models/IBooking";
+import { getBookings, getCustomer } from "../services/bookingServices";
 
 const ShowBookings = () => {
-  const [bookings, setBookings] = useState<IBooking[]>([]);
+  const [bookings, setBookings] = useState<
+    (IBookingResponse & { customer?: ICustomer })[]
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchBookings = async () => {
+    const fetchBookingsWithCustomers = async () => {
       try {
         setIsLoading(true);
         const data = await getBookings();
-        console.log("Hämtade bokningar:", data);
-        setBookings(data.reverse());
+
+        const bookingsWithCustomers = await Promise.all(
+          data.map(async (booking) => {
+            const customer = await getCustomer(booking.customerId);
+            return { ...booking, customer };
+          })
+        );
+
+        setBookings(bookingsWithCustomers.reverse());
       } catch (err) {
         console.error("Kunde inte ladda bokningar: ", err);
         setError("Kunde inte ladda bokningar");
@@ -22,7 +31,7 @@ const ShowBookings = () => {
       }
     };
 
-    fetchBookings();
+    fetchBookingsWithCustomers();
   }, []);
 
   if (isLoading) return <div>Laddar...</div>;
@@ -30,19 +39,34 @@ const ShowBookings = () => {
   if (bookings.length === 0) return <div>Inga bokningar hittade</div>;
 
   return (
-    <div>
-      <h1>Bokningar för restaurangen:</h1>
-      {bookings.map((booking) => (
-        <div key={booking.id}>
-          <h3>Bokning:</h3>
-          <p>{booking.customer?.name || "Inget namn"}</p>
-          <p>{booking.customer?.lastname || "Inget efternamn"}</p>
-          <p>Datum: {booking.date}</p>
-          <p>Tid: {booking.time}</p>
-          <p>Antal gäster:{booking.numberOfGuests}</p>
-        </div>
-      ))}
-    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Datum</th>
+          <th>Tid</th>
+          <th>Antal gäster</th>
+          <th>Namn</th>
+          <th>Email</th>
+          <th>Telefon</th>
+        </tr>
+      </thead>
+      <tbody>
+        {bookings.map((booking) => (
+          <tr key={booking._id}>
+            <td>{booking.date}</td>
+            <td>{booking.time}</td>
+            <td>{booking.numberOfGuests}</td>
+            <td>
+              {booking.customer
+                ? `${booking.customer.name} ${booking.customer.lastname}`
+                : "Okänd"}
+            </td>
+            <td>{booking.customer?.email || "Ingen email"}</td>
+            <td>{booking.customer?.phone || "Ingen telefon"}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };
 

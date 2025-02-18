@@ -4,6 +4,7 @@ import Booking from "../pages/Booking";
 import Contact from "../pages/Contact";
 import Home from "../pages/Home";
 import AdminDashboard from "../pages/AdminDashboard";
+import NewAdminDashboard from "../pages/NewAdminDashboard";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/booking", element: <Booking /> },
       { path: "/contact", element: <Contact /> },
-      { path: "/admin", element: <AdminDashboard /> },
+      { path: "/admin", element: <NewAdminDashboard /> },
     ],
   },
 ]);
