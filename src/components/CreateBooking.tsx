@@ -172,11 +172,9 @@ export const CreateBooking = () => {
                     e.key === "Enter" && handleTimeSlotSelection(timeSlot)
                   }
                   role="button"
-                  className={
-                    availableTables > 0
-                      ? "timeslot-item"
-                      : "timeslot-item fully-booked"
-                  }
+                  className={`timeslot-item ${
+                    availableTables > 0 ? "" : "fully-booked"
+                  } ${bookingData.time === timeSlot ? "selected-time" : ""}`}
                   onClick={() =>
                     availableTables > 0 && handleTimeSlotSelection(timeSlot)
                   }

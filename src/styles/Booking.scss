@@ -76,6 +76,11 @@ h2 {
   color: grey;
 }
 
+.selected-time {
+  background-color: #eee;
+  font-weight: 500;
+}
+
 .fully-booked-btn {
   font-family: "Inter", sans serif;
   cursor: not-allowed;
