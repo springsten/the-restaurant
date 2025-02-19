@@ -38,9 +38,19 @@ export const getCustomer = async (customerId: string) => {
       throw new Error(`Error, status: ${response.status}`);
     }
     const data = await response.json();
-    return data[0]; // Vi antar att API:t returnerar en array med en kund
+    return data[0];
   } catch (error) {
     console.error("Fel vid hämtning av kund:", error);
     return null;
+  }
+};
+
+export const deleteBooking = async (bookingId: string): Promise<void> => {
+  const response = await fetch(`${BASE_URL}/booking/delete/${bookingId}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error deleting booking, status: ${response.status}`);
   }
 };

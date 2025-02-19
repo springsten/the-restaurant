@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { IBookingResponse } from "../models/IBookingResponse";
-import { getBookings, getCustomer } from "../services/bookingServices";
+import {
+  deleteBooking,
+  getBookings,
+  getCustomer,
+} from "../services/bookingServices";
 import { ICustomer } from "../models/ICustomer";
 
 const ShowBookings = () => {
@@ -10,30 +14,42 @@ const ShowBookings = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const fetchBookingsWithCustomers = async () => {
+    try {
+      setIsLoading(true);
+      const data = await getBookings();
+
+      const bookingsWithCustomers = await Promise.all(
+        data.map(async (booking) => {
+          const customer = await getCustomer(booking.customerId);
+          return { ...booking, customer };
+        })
+      );
+
+      setBookings(bookingsWithCustomers.reverse());
+    } catch (err) {
+      console.error("Kunde inte ladda bokningar: ", err);
+      setError("Kunde inte ladda bokningar");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchBookingsWithCustomers = async () => {
-      try {
-        setIsLoading(true);
-        const data = await getBookings();
-
-        const bookingsWithCustomers = await Promise.all(
-          data.map(async (booking) => {
-            const customer = await getCustomer(booking.customerId);
-            return { ...booking, customer };
-          })
-        );
-
-        setBookings(bookingsWithCustomers.reverse());
-      } catch (err) {
-        console.error("Kunde inte ladda bokningar: ", err);
-        setError("Kunde inte ladda bokningar");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchBookingsWithCustomers();
   }, []);
+
+  const handleDelete = async (bookingId: string) => {
+    try {
+      await deleteBooking(bookingId);
+      setBookings((prevBookings) =>
+        prevBookings.filter((booking) => booking._id !== bookingId)
+      );
+    } catch (err) {
+      console.error("Kunde inte ta bort bokning: ", err);
+      setError("Kunde inte ta bort bokning");
+    }
+  };
 
   if (isLoading) return <div>Laddar...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -64,6 +80,11 @@ const ShowBookings = () => {
             </td>
             <td>{booking.customer?.email || "Ingen email"}</td>
             <td>{booking.customer?.phone || "Ingen telefon"}</td>
+            <td>
+              <button onClick={() => handleDelete(booking._id)}>
+                Ta bort bokning
+              </button>
+            </td>
           </tr>
         ))}
       </tbody>
