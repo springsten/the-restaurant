@@ -56,39 +56,45 @@ const ShowBookings = () => {
   if (bookings.length === 0) return <div>Inga bokningar hittade</div>;
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Datum</th>
-          <th>Tid</th>
-          <th>Antal gäster</th>
-          <th>Namn</th>
-          <th>Email</th>
-          <th>Telefon</th>
-        </tr>
-      </thead>
-      <tbody>
-        {bookings.map((booking) => (
-          <tr key={booking._id}>
-            <td>{booking.date}</td>
-            <td>{booking.time}</td>
-            <td>{booking.numberOfGuests}</td>
-            <td>
-              {booking.customer
-                ? `${booking.customer.name} ${booking.customer.lastname}`
-                : "Okänd"}
-            </td>
-            <td>{booking.customer?.email || "Ingen email"}</td>
-            <td>{booking.customer?.phone || "Ingen telefon"}</td>
-            <td>
-              <button onClick={() => handleDelete(booking._id)}>
-                Ta bort bokning
-              </button>
-            </td>
+    <div className="table-container">
+      <table className="booking-table">
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Tid</th>
+            <th>Antal gäster</th>
+            <th>Namn</th>
+            <th>Email</th>
+            <th>Telefon</th>
+            <th>Ta bort?</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {bookings.map((booking) => (
+            <tr key={booking._id}>
+              <td>{booking.date}</td>
+              <td>{booking.time}</td>
+              <td>{booking.numberOfGuests}</td>
+              <td>
+                {booking.customer
+                  ? `${booking.customer.name} ${booking.customer.lastname}`
+                  : "Okänd"}
+              </td>
+              <td>{booking.customer?.email || "Ingen email"}</td>
+              <td>{booking.customer?.phone || "Ingen telefon"}</td>
+              <td>
+                <button
+                  className="delete-button"
+                  onClick={() => handleDelete(booking._id)}
+                >
+                  Ta bort bokning
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

@@ -54,3 +54,28 @@ export const deleteBooking = async (bookingId: string): Promise<void> => {
     throw new Error(`Error deleting booking, status: ${response.status}`);
   }
 };
+
+export const editBooking = async (
+  bookingId: string,
+  bookingData: {
+    restaurantId: string;
+    date: string;
+    time: string;
+    numberOfGuests: number;
+    customerId: string;
+  }
+): Promise<IBookingResponse> => {
+  const response = await fetch(`${BASE_URL}/booking/update/${bookingId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(bookingData),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error editing booking, status: ${response.status}`);
+  }
+
+  return response.json();
+};

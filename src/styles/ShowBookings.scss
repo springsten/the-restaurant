@@ -1,0 +1,41 @@
+body {
+  background-color: white;
+}
+
+.table-container {
+  overflow-x: auto;
+  font-family: "Inter", sans-serif;
+  padding: 20px;
+
+  .delete-button {
+    background: #850a0a;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-weight: 300;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .booking-table {
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+    border-collapse: collapse;
+    background: #d8d8d8;
+    border-radius: 5px;
+    overflow: hidden;
+    color: black;
+
+    thead {
+      background: #808080;
+      font-weight: bold;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      text-align: left;
+    }
+  }
+}
