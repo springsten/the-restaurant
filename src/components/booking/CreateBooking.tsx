@@ -10,6 +10,7 @@ import { GuestSelection } from "./GuestSelection";
 import { TimeSelection } from "./TimeSelection";
 import { BookingSummary } from "./BookingSummary";
 import { CustomerForm } from "./CustomerForm";
+import { BookingConfirmation } from "./BookingConfirmation";
 
 interface IBooking {
   restaurantId: string;
@@ -30,6 +31,7 @@ export const CreateBooking = () => {
   const [isDateSelected, setIsDateSelected] = useState(false);
   const [isTimeSelected, setIsTimeSelected] = useState(false);
   // state
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [bookingData, setBookingData] = useState<IBooking>({
     restaurantId: RESTAURANT_ID,
     date: "",
@@ -42,6 +44,27 @@ export const CreateBooking = () => {
       phone: "",
     },
   });
+
+  // funktion för att cleara allt användaren skrivit in när man stänger bekräftelse-modalen:
+  const resetBookingForm = () => {
+    setIsGuestSelected(false);
+    setIsDateSelected(false);
+    setIsTimeSelected(false);
+    setBookingData({
+      restaurantId: RESTAURANT_ID,
+      date: "",
+      time: "",
+      numberOfGuests: 0,
+      customer: {
+        name: "",
+        lastname: "",
+        email: "",
+        phone: "",
+      },
+    });
+    setBookings([]);
+    setCalendarValue(new Date());
+  };
 
   const [bookings, setBookings] = useState<IBooking[]>([]);
   const [loading, setLoading] = useState(false);
@@ -102,16 +125,16 @@ export const CreateBooking = () => {
     setIsTimeSelected(true);
   };
 
+  const handleCustomerFormSubmit = (updatedBookingData: IBooking) => {
+    setBookingData(updatedBookingData);
+    handleSubmit();
+  };
+
   // Hantera formulärets inlämning
   const handleSubmit = async () => {
     const response = await createBooking(bookingData);
     console.log("Bokningen skapades:", response);
-  };
-
-  // Funktion för att ta emot uppdaterad kundinformation
-  const handleCustomerFormSubmit = (updatedBookingData: IBooking) => {
-    setBookingData(updatedBookingData);
-    handleSubmit(); // Skicka bokningen när kunddata är ifylld
+    setShowConfirmationModal(true);
   };
 
   return (
@@ -150,6 +173,25 @@ export const CreateBooking = () => {
             bookingData={bookingData}
             handleSubmitForm={handleCustomerFormSubmit} // Skicka handleSubmitForm till CustomerForm
           />
+        </div>
+      )}
+      {showConfirmationModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <BookingConfirmation
+              bookingData={bookingData}
+              customer={bookingData.customer}
+            />
+            <button
+              className="close-modal"
+              onClick={() => {
+                setShowConfirmationModal(false);
+                resetBookingForm();
+              }}
+            >
+              Stäng
+            </button>
+          </div>
         </div>
       )}
     </>
