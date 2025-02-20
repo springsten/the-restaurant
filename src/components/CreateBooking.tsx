@@ -6,6 +6,7 @@ import {
 } from "../services/bookingServices";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { BookingInfo } from "./BookingInfo";
 
 interface IBooking {
   restaurantId: string;
@@ -43,8 +44,6 @@ export const CreateBooking = () => {
   const [loading, setLoading] = useState(false);
 
   // hanterar val av antal gäster:
-  const guests = [1, 2, 3, 4, 5, 6];
-
   const handleGuestSelection = (num: number) => {
     setBookingData((prev) => ({
       ...prev,
@@ -54,11 +53,11 @@ export const CreateBooking = () => {
   };
 
   // väljer datum:
-  const [calendarValue, setCalendarValue] = useState(new Date());
+  // const [calendarValue, setCalendarValue] = useState(new Date());
 
-  const onChange = async (userDate: Date) => {
-    setCalendarValue(userDate);
-    const formattedDate = userDate.toLocaleDateString("sv-SE");
+  const handleDateSelect = async (date: Date) => {
+    // setCalendarValue(userDate);
+    const formattedDate = date.toLocaleDateString("sv-SE");
 
     setBookingData((prev) => ({
       ...prev,
@@ -92,7 +91,6 @@ export const CreateBooking = () => {
   };
 
   // hanterar val av tid:
-  const timeSlots = ["18:00", "21:00"];
   const handleTimeSlotSelection = (timeSlot: string) => {
     setBookingData((prev) => ({
       ...prev,
@@ -160,49 +158,27 @@ export const CreateBooking = () => {
       {isDateSelected && (
         <div className="select-container">
           <h2 className="booking-heading">Välj tid för sittning</h2>
-
           <ul className="timeslot-list">
-            {timeSlots.map((timeSlot) => {
-              const availableTables = getAvailableTables(timeSlot);
-              return (
-                <li
-                  tabIndex={0}
-                  key={timeSlot}
-                  onKeyDown={(e) =>
-                    e.key === "Enter" && handleTimeSlotSelection(timeSlot)
-                  }
-                  role="button"
-                  className={
-                    availableTables > 0
-                      ? "timeslot-item"
-                      : "timeslot-item fully-booked"
-                  }
-                  onClick={() =>
-                    availableTables > 0 && handleTimeSlotSelection(timeSlot)
-                  }
+            {timeSlots.map((timeSlot) => (
+              <li
+                tabIndex={0}
+                key={timeSlot}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && handleTimeSlotSelection(timeSlot)
+                }
+                role="button"
+                className="timeslot-item"
+                onClick={() => handleTimeSlotSelection(timeSlot)}
+              >
+                {timeSlot}
+                <button
+                  className="book-reservation"
+                  onClick={() => handleTimeSlotSelection(timeSlot)}
                 >
-                  {timeSlot}
-                  <span className="available-tables">
-                    ({availableTables} lediga bord)
-                  </span>
-                  {availableTables === 0 && <span> - Fullbokat</span>}
-                  <button
-                    className={
-                      availableTables > 0
-                        ? "book-reservation"
-                        : "fully-booked-btn"
-                    }
-                    onClick={() =>
-                      availableTables > 0
-                        ? handleTimeSlotSelection(timeSlot)
-                        : alert("Inga lediga bord")
-                    }
-                  >
-                    Boka
-                  </button>
-                </li>
-              );
-            })}
+                  Boka
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
       )}
