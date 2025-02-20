@@ -73,54 +73,58 @@ const ShowBookings = () => {
   return (
     <>
       <div className="table-container">
-        <table className="booking-table">
-          <thead>
-            <tr>
-              <th>Datum</th>
-              <th>Tid</th>
-              <th>Antal gäster</th>
+        {/* 📌 Rubrik "Bokningar" centrerad */}
+        <h2 className="booking-title">Bokningar</h2>
 
-              <th>Namn</th>
-              <th>Email</th>
-              <th>Telefon</th>
-              <th>Ändra</th>
-              <th>Ta bort</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bookings.map((booking) => (
-              <tr key={booking._id}>
-                <td>{booking.date}</td>
-                <td>{booking.time}</td>
-                <td>{booking.numberOfGuests}</td>
-
-                <td>
-                  {booking.customer
-                    ? `${booking.customer.name} ${booking.customer.lastname}`
-                    : "Okänd"}
-                </td>
-                <td>{booking.customer?.email || "Ingen email"}</td>
-                <td>{booking.customer?.phone || "Ingen telefon"}</td>
-                <td>
-                  <button
-                    className="edit-button"
-                    onClick={() => handleEditBooking(booking)}
-                  >
-                    Ändra bokning
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="delete-button"
-                    onClick={() => handleDelete(booking._id)}
-                  >
-                    Ta bort bokning
-                  </button>
-                </td>
+        <div className="table-wrapper">
+          <table className="booking-table">
+            <thead>
+              <tr>
+                <th>Datum</th>
+                <th>Tid</th>
+                <th>Antal gäster</th>
+                <th>Namn</th>
+                <th>Email</th>
+                <th>Telefon</th>
+                <th>Ändra</th>
+                <th>Ta bort</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {bookings.map((booking) => (
+                <tr key={booking._id}>
+                  <td>{booking.date}</td>
+                  <td>{booking.time}</td>
+                  <td>{booking.numberOfGuests}</td>
+                  <td>
+                    {booking.customer
+                      ? `${booking.customer.name} ${booking.customer.lastname}`
+                      : "Okänd"}
+                  </td>
+                  <td>{booking.customer?.email || "Ingen email"}</td>
+                  <td>{booking.customer?.phone || "Ingen telefon"}</td>
+                  <td>
+                    <button
+                      className="edit-button"
+                      onClick={() => handleEditBooking(booking)}
+                    >
+                      Ändra bokning
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDelete(booking._id)}
+                    >
+                      Ta bort bokning
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
         {selectedBooking && (
           <EditBooking
             booking={selectedBooking}
@@ -129,7 +133,7 @@ const ShowBookings = () => {
         )}
       </div>
     </>
-  );
+);
 };
 
 export default ShowBookings;

@@ -28,9 +28,9 @@ function AdminDashboard() {
       );
 
       dispatch({ type: "SET_BOOKINGS", payload: bookingsWithCustomers.reverse() });
-      console.log("✅ Bokningslista uppdaterad:", bookingsWithCustomers);
+      console.log("Bokningslista uppdaterad:", bookingsWithCustomers);
     } catch (error) {
-      console.error("❌ Fel vid hämtning av bokningar:", error);
+      console.error(" Fel vid hämtning av bokningar:", error);
     }
   }
 
@@ -48,7 +48,7 @@ function AdminDashboard() {
 
       await fetchData();
     } catch (error) {
-      console.error("❌ Fel vid skapande av bokning:", error);
+      console.error("Fel vid skapande av bokning:", error);
     }
   }
 
@@ -57,7 +57,7 @@ function AdminDashboard() {
       await deleteAdminBooking(id);
       await fetchData();
     } catch (error) {
-      console.error("❌ Fel vid borttagning:", error);
+      console.error("Fel vid borttagning:", error);
     }
   }
 
