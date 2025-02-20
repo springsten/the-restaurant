@@ -13,6 +13,9 @@ const Navbar = () => {
         <li>
           <NavLink to={"/contact"}>Kontakt</NavLink>
         </li>
+        <li>
+          <NavLink to={"/admin"}>Admin</NavLink>
+        </li>
       </ul>
     </nav>
   );
