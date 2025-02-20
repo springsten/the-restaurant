@@ -55,7 +55,15 @@ const ShowBookings = () => {
   };
 
   const handleEditBooking = (booking: IBookingResponse) => {
-    setSelectedBooking(booking); // Uppdatera den valda bokningen
+    setSelectedBooking(booking);
+  };
+
+  const handleBookingUpdated = () => {
+    console.log(
+      `Bokningen med id: ${bookings.map(
+        (booking) => booking._id
+      )} har uppdaterats!`
+    );
   };
 
   if (isLoading) return <div>Laddar...</div>;
@@ -113,7 +121,12 @@ const ShowBookings = () => {
             ))}
           </tbody>
         </table>
-        {selectedBooking && <EditBooking booking={selectedBooking} />}
+        {selectedBooking && (
+          <EditBooking
+            booking={selectedBooking}
+            onBookingUpdated={handleBookingUpdated}
+          />
+        )}
       </div>
     </>
   );
