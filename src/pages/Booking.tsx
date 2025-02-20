@@ -1,4 +1,4 @@
-import { CreateBooking } from "../components/CreateBooking";
+import { CreateBooking } from "../components/booking/CreateBooking";
 
 const Booking = () => {
   return (
