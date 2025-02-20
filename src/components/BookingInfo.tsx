@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Calendar from "react-calendar";
 import { Value } from "react-calendar/src/shared/types.js";
 
@@ -30,12 +30,12 @@ export const BookingInfo = ({
   // väljer datum:
   const [calendarValue, setCalendarValue] = useState(new Date());
 
-  useEffect(() => {
-    if (bookingData.date) {
-      const dateObject = new Date(bookingData.date); // Omvandla sträng till Dateobject! HOPPAS
-      setCalendarValue(dateObject);
-    }
-  }, [bookingData.date]);
+  // useEffect(() => {
+  //   if (bookingData.date) {
+  //     const dateObject = new Date(bookingData.date); // Omvandla sträng till Dateobject! HOPPAS
+  //     setCalendarValue(dateObject);
+  //   }
+  // }, [bookingData.date]);
 
   const handleDateChange = (userDate: Value) => {
     if (userDate instanceof Date && !isNaN(userDate.getTime())) {
