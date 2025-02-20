@@ -6,6 +6,7 @@ import {
 } from "../services/bookingServices";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { BookingInfo } from "./BookingInfo";
 
 interface IBooking {
   restaurantId: string;
@@ -41,10 +42,14 @@ export const CreateBooking = () => {
 
   const [bookings, setBookings] = useState<IBooking[]>([]);
   const [loading, setLoading] = useState(false);
+<<<<<<< HEAD
 
   // hanterar val av antal gäster:
   const guests = [1, 2, 3, 4, 5, 6];
+=======
+>>>>>>> 5750c32eedb1fcb95dc4480760c43cb3316e29b5
 
+  // hanterar val av antal gäster:
   const handleGuestSelection = (num: number) => {
     setBookingData((prev) => ({
       ...prev,
@@ -54,11 +59,19 @@ export const CreateBooking = () => {
   };
 
   // väljer datum:
+<<<<<<< HEAD
   const [calendarValue, setCalendarValue] = useState(new Date());
 
   const onChange = async (userDate: Date) => {
     setCalendarValue(userDate);
     const formattedDate = userDate.toLocaleDateString("sv-SE");
+=======
+  // const [calendarValue, setCalendarValue] = useState(new Date());
+
+  const handleDateSelect = async (date: Date) => {
+    // setCalendarValue(userDate);
+    const formattedDate = date.toLocaleDateString("sv-SE");
+>>>>>>> 5750c32eedb1fcb95dc4480760c43cb3316e29b5
 
     setBookingData((prev) => ({
       ...prev,
@@ -92,7 +105,6 @@ export const CreateBooking = () => {
   };
 
   // hanterar val av tid:
-  const timeSlots = ["18:00", "21:00"];
   const handleTimeSlotSelection = (timeSlot: string) => {
     setBookingData((prev) => ({
       ...prev,
