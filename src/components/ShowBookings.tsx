@@ -6,6 +6,7 @@ import {
   getCustomer,
 } from "../services/bookingServices";
 import { ICustomer } from "../models/ICustomer";
+import EditBooking from "./EditBooking";
 
 const ShowBookings = () => {
   const [bookings, setBookings] = useState<
@@ -13,6 +14,8 @@ const ShowBookings = () => {
   >([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedBooking, setSelectedBooking] =
+    useState<IBookingResponse | null>(null);
 
   const fetchBookingsWithCustomers = async () => {
     try {
@@ -51,6 +54,10 @@ const ShowBookings = () => {
     }
   };
 
+  const handleEditBooking = (booking: IBookingResponse) => {
+    setSelectedBooking(booking); // Uppdatera den valda bokningen
+  };
+
   if (isLoading) return <div>Laddar...</div>;
   if (error) return <div>Error: {error}</div>;
   if (bookings.length === 0) return <div>Inga bokningar hittade</div>;
@@ -64,6 +71,7 @@ const ShowBookings = () => {
               <th>Datum</th>
               <th>Tid</th>
               <th>Antal gäster</th>
+
               <th>Namn</th>
               <th>Email</th>
               <th>Telefon</th>
@@ -77,6 +85,7 @@ const ShowBookings = () => {
                 <td>{booking.date}</td>
                 <td>{booking.time}</td>
                 <td>{booking.numberOfGuests}</td>
+
                 <td>
                   {booking.customer
                     ? `${booking.customer.name} ${booking.customer.lastname}`
@@ -85,7 +94,12 @@ const ShowBookings = () => {
                 <td>{booking.customer?.email || "Ingen email"}</td>
                 <td>{booking.customer?.phone || "Ingen telefon"}</td>
                 <td>
-                  <button className="edit-button">Ändra bokning</button>
+                  <button
+                    className="edit-button"
+                    onClick={() => handleEditBooking(booking)}
+                  >
+                    Ändra bokning
+                  </button>
                 </td>
                 <td>
                   <button
@@ -99,6 +113,7 @@ const ShowBookings = () => {
             ))}
           </tbody>
         </table>
+        {selectedBooking && <EditBooking booking={selectedBooking} />}
       </div>
     </>
   );
