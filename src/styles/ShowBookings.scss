@@ -1,6 +1,6 @@
 body {
-  background: white;
-  color: black;
+  // background: white;
+  // color: black;
   font-family: "Inter", sans-serif;
 }
 
@@ -32,7 +32,6 @@ body {
   color: black;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
-
 
 button {
   border: none;
@@ -78,7 +77,6 @@ td {
   white-space: nowrap;
 }
 
-
 .edit-booking-container {
   display: flex;
   flex-direction: column;
@@ -90,10 +88,9 @@ td {
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #f3f3f3;
+  background-color: #3f3f3f;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
-
 
 form {
   display: flex;
@@ -121,7 +118,6 @@ form {
   }
 }
 
-
 @media (max-width: 768px) {
   .table-container {
     padding: 10px;
@@ -135,7 +131,6 @@ form {
     display: block;
     white-space: nowrap;
 
-  
     &::-webkit-scrollbar {
       height: 5px;
     }
