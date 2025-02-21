@@ -55,27 +55,28 @@ export const deleteBooking = async (bookingId: string): Promise<void> => {
   }
 };
 
-export const editBooking = async (
-  bookingId: string,
-  bookingData: {
-    restaurantId: string;
-    date: string;
-    time: string;
-    numberOfGuests: number;
-    customerId: string;
-  }
-): Promise<IBookingResponse> => {
-  const response = await fetch(`${BASE_URL}/booking/update/${bookingId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(bookingData),
-  });
+export const editBooking = async (id: string, updatedBookingData: any) => {
+  const response = await fetch(
+    `https://school-restaurant-api.azurewebsites.net/booking/update/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedBookingData),
+    }
+  );
 
   if (!response.ok) {
-    throw new Error(`Error editing booking, status: ${response.status}`);
+    throw new Error("Misslyckades med att uppdatera bokning");
   }
 
-  return response.json();
+  // Kolla om svaret innehåller data innan vi försöker läsa JSON
+  const text = await response.text();
+  if (!text) {
+    // Om inget svar returneras, returnera den uppdaterade bokningsdatan direkt
+    return updatedBookingData;
+  }
+
+  return JSON.parse(text);
 };

@@ -5,10 +5,10 @@ import { editBooking } from "../services/bookingServices";
 
 interface EditBookingProps {
   booking: IBookingResponse & { customer?: ICustomer };
-  onBookingUpdated: () => void;
+  onBookingUpdated: (updatedBooking: IBookingResponse) => void;
 }
 
-const EditBooking = ({ booking }: EditBookingProps) => {
+const EditBooking = ({ booking, onBookingUpdated }: EditBookingProps) => {
   const [formData, setFormData] = useState({
     date: booking.date,
     time: booking.time,
@@ -19,6 +19,7 @@ const EditBooking = ({ booking }: EditBookingProps) => {
 
   // uppdatera formData när booking ändras
   useEffect(() => {
+    console.log("Ny bokning: ", booking);
     setFormData({
       date: booking.date,
       time: booking.time,
@@ -55,7 +56,7 @@ const EditBooking = ({ booking }: EditBookingProps) => {
       const updatedBooking = await editBooking(booking._id, updatedBookingData);
 
       console.log("Bokning uppdaterad:", updatedBooking);
-      onBookingUpdated();
+      onBookingUpdated(updatedBooking);
     } catch (err) {
       console.error("Fel vid uppdatering av bokning:", err);
     }
@@ -139,6 +140,3 @@ const EditBooking = ({ booking }: EditBookingProps) => {
 };
 
 export default EditBooking;
-function onBookingUpdated() {
-  throw new Error("Function not implemented.");
-}

@@ -58,11 +58,17 @@ const ShowBookings = () => {
     setSelectedBooking(booking);
   };
 
-  const handleBookingUpdated = () => {
-    console.log(
-      `Bokningen med id: ${bookings.map(
-        (booking) => booking._id
-      )} har uppdaterats!`
+  const handleBookingUpdated = (updatedBooking: IBookingResponse) => {
+    setBookings((prevBookings) =>
+      prevBookings.map((booking) =>
+        booking._id === (updatedBooking._id || updatedBooking.id)
+          ? {
+              ...booking,
+              ...updatedBooking,
+              _id: updatedBooking._id || updatedBooking.id,
+            }
+          : booking
+      )
     );
   };
 
@@ -133,7 +139,7 @@ const ShowBookings = () => {
         )}
       </div>
     </>
-);
+  );
 };
 
 export default ShowBookings;
