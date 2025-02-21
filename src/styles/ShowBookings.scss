@@ -119,6 +119,7 @@ form {
 }
 
 @media (max-width: 768px) {
+
   .table-container {
     padding: 10px;
     display: block;
@@ -126,7 +127,7 @@ form {
 
   .booking-table {
     font-size: 12px;
-    min-width: 700px;
+    min-width: 100%;
     overflow-x: auto;
     display: block;
     white-space: nowrap;
@@ -162,4 +163,16 @@ form {
     font-size: 14px;
     padding: 8px;
   }
+
+.booking-table th:nth-child(3),
+.booking-table th:nth-child(5),
+.booking-table th:nth-child(6) {
+  display: none;
+}
+
+td:nth-child(3),
+td:nth-child(5),
+td:nth-child(6) {
+  display: none;
+}
 }

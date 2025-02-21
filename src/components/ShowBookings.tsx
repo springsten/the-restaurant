@@ -108,7 +108,7 @@ const ShowBookings = () => {
                       className="edit-button"
                       onClick={() => handleEditBooking(booking)}
                     >
-                      Ändra bokning
+                      Ändra
                     </button>
                   </td>
                   <td>
@@ -116,7 +116,7 @@ const ShowBookings = () => {
                       className="delete-button"
                       onClick={() => handleDelete(booking._id)}
                     >
-                      Ta bort bokning
+                      Ta bort
                     </button>
                   </td>
                 </tr>
@@ -133,7 +133,7 @@ const ShowBookings = () => {
         )}
       </div>
     </>
-);
+  );
 };
 
 export default ShowBookings;
