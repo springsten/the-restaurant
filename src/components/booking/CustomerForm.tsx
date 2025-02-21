@@ -13,6 +13,7 @@ interface FormErrors {
   lastname?: string;
   email?: string;
   phone?: string;
+  consent?: string;
 }
 
 export const CustomerForm = ({
@@ -30,6 +31,9 @@ export const CustomerForm = ({
     phone: bookingData.customer.phone,
   });
 
+  // gdpr:
+  const [consentGiven, setConsentGiven] = useState(false);
+
   // initialiserear state för error:
   const [errors, setErrors] = useState<FormErrors>({
     name: "",
@@ -46,6 +50,10 @@ export const CustomerForm = ({
     }));
   };
 
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setConsentGiven(e.target.checked);
+  };
+
   // validerar formuläret:
   const validateForm = () => {
     const newErrors: FormErrors = {};
@@ -59,6 +67,8 @@ export const CustomerForm = ({
     }
     if (!formData.phone)
       newErrors.phone = "Du måste skriva in ett telefonnummer";
+
+    if (!consentGiven) newErrors.consent = "Du måste godkänna våra villkor";
 
     setErrors(newErrors);
 
@@ -130,6 +140,19 @@ export const CustomerForm = ({
             />
             {errors.phone && <span>{errors.phone}</span>}
           </div>
+        </div>
+
+        <div className="customer-input">
+          <label>
+            <input
+              type="checkbox"
+              checked={consentGiven}
+              onChange={handleCheckboxChange}
+            />
+            Jag godkänner att mina uppgifter behandlas i enlighet med GDPR och
+            enligt vår integritetspolicy
+          </label>
+          {errors.consent && <span>{errors.consent}</span>}
         </div>
         <button
           type="button"
