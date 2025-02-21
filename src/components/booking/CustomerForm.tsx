@@ -57,18 +57,18 @@ export const CustomerForm = ({
   // validerar formuläret:
   const validateForm = () => {
     const newErrors: FormErrors = {};
-    if (!formData.name) newErrors.name = "Du måste skriva in ett förnamn";
+    if (!formData.name) newErrors.name = "Du måste skriva in ett förnamn!";
     if (!formData.lastname)
-      newErrors.lastname = "Du måste skriva in ett efternamn";
+      newErrors.lastname = "Du måste skriva in ett efternamn!";
     if (!formData.email) {
-      newErrors.email = "Du måste skriva in en epostadress";
+      newErrors.email = "Du måste skriva in en epostadress!";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Ogiltig epostadress";
+      newErrors.email = "Ogiltig epostadress!";
     }
     if (!formData.phone)
-      newErrors.phone = "Du måste skriva in ett telefonnummer";
+      newErrors.phone = "Du måste skriva in ett telefonnummer!";
 
-    if (!consentGiven) newErrors.consent = "Du måste godkänna våra villkor";
+    if (!consentGiven) newErrors.consent = "Du måste godkänna våra villkor!";
 
     setErrors(newErrors);
 
@@ -142,9 +142,10 @@ export const CustomerForm = ({
           </div>
         </div>
 
-        <div className="customer-input">
+        <div className="consent-input">
           <label>
             <input
+              className="consent"
               type="checkbox"
               checked={consentGiven}
               onChange={handleCheckboxChange}

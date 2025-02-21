@@ -103,6 +103,12 @@ h2 {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+
+  span {
+    font-weight: 300;
+    color: red;
+    text-align: center;
+  }
 }
 
 .input-group {
@@ -142,6 +148,21 @@ input:focus {
 
 .confirm-booking:hover {
   background-color: #0056b3;
+}
+
+.consent-input {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  label {
+    font-weight: 300;
+  }
+}
+
+.consent {
+  width: 16px;
+  height: 16px;
 }
 
 .modal-overlay {
