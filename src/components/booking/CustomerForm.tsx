@@ -1,16 +1,11 @@
 import { useState } from "react";
+import { IBooking } from "../../models/IBooking";
 
-interface IBooking {
-  restaurantId: string;
-  date: string;
-  time: string;
-  numberOfGuests: number;
-  customer: {
-    name: string;
-    lastname: string;
-    email: string;
-    phone: string;
-  };
+interface CustomerFormData {
+  name: string;
+  lastname: string;
+  email: string;
+  phone: string;
 }
 
 interface FormErrors {
@@ -28,7 +23,7 @@ export const CustomerForm = ({
   handleSubmitForm: (data: IBooking) => void;
 }) => {
   // initialiserar state för formuläret:
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<CustomerFormData>({
     name: bookingData.customer.name,
     lastname: bookingData.customer.lastname,
     email: bookingData.customer.email,
@@ -73,9 +68,16 @@ export const CustomerForm = ({
   const handleSubmit = () => {
     const isValid = validateForm();
     if (isValid) {
+      const customerData = {
+        name: formData.name,
+        lastname: formData.lastname,
+        email: formData.email,
+        phone: formData.phone,
+      };
+
       handleSubmitForm({
         ...bookingData,
-        customer: formData,
+        customer: customerData,
       });
     }
   };

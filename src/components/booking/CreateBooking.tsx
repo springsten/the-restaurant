@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   createBooking,
   getBookings,
@@ -11,6 +11,7 @@ import { TimeSelection } from "./TimeSelection";
 import { BookingSummary } from "./BookingSummary";
 import { CustomerForm } from "./CustomerForm";
 import { BookingConfirmation } from "./BookingConfirmation";
+import { IBookingResponse } from "../../models/IBookingResponse";
 
 interface IBooking {
   restaurantId: string;
@@ -66,7 +67,7 @@ export const CreateBooking = () => {
     setCalendarValue(new Date());
   };
 
-  const [bookings, setBookings] = useState<IBooking[]>([]);
+  const [bookings, setBookings] = useState<IBookingResponse[]>([]);
   const [loading, setLoading] = useState(false);
 
   const handleGuestSelection = (num: number) => {
@@ -93,12 +94,14 @@ export const CreateBooking = () => {
     setLoading(true);
     try {
       const allBookings = await getBookings();
+      console.log(allBookings);
+
       const filteredBookings = allBookings.filter(
         (booking) => booking.date === formattedDate
       );
       setBookings(filteredBookings);
     } catch (error) {
-      console.error("Kunde inte hämta bokningar (datum)", error);
+      console.error("Kunde inte hämta bokningar: ", error);
     }
 
     setLoading(false);
@@ -127,11 +130,18 @@ export const CreateBooking = () => {
 
   const handleCustomerFormSubmit = (updatedBookingData: IBooking) => {
     setBookingData(updatedBookingData);
-    handleSubmit();
+    console.log("Uppdaterad booking data 133: ", updatedBookingData);
   };
+
+  useEffect(() => {
+    if (bookingData.customer.name) {
+      handleSubmit();
+    }
+  }, [bookingData]);
 
   // Hantera formulärets inlämning
   const handleSubmit = async () => {
+    console.log("bookingData på rad 138:", bookingData);
     const response = await createBooking(bookingData);
     console.log("Bokningen skapades:", response);
     setShowConfirmationModal(true);

@@ -1,5 +1,5 @@
 export interface IBooking {
-  id: string;
+  id?: string;
   customer: {
     name: string;
     lastname: string;
