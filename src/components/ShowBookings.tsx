@@ -72,6 +72,10 @@ const ShowBookings = () => {
     );
   };
 
+  const handleCloseModal = () => {
+    setSelectedBooking(null);
+  };
+
   if (isLoading) return <div>Laddar...</div>;
   if (error) return <div>Error: {error}</div>;
   if (bookings.length === 0) return <div>Inga bokningar hittade</div>;
@@ -135,6 +139,7 @@ const ShowBookings = () => {
           <EditBooking
             booking={selectedBooking}
             onBookingUpdated={handleBookingUpdated}
+            onClose={handleCloseModal}
           />
         )}
       </div>
