@@ -30,7 +30,7 @@ const Contact = () => {
           </p>
         </div>
       </div>
-      <div id="solicalblock">
+      <div id="socialblock">
         <div className="social">
           <div className="socialheadline">
             <h4>Följ oss</h4>
