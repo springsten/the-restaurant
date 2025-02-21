@@ -83,7 +83,7 @@ const Contact = () => {
               </li>
               <li className="info_item">
                 <span className="info_item_label">Söndag</span>
-                <span className="info_item_value">Stängt</span>
+                <span className="info_item_value">16:00 - 00:00</span>
               </li>
             </ol>
           </div>
