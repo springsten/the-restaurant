@@ -53,7 +53,7 @@ const Contact = () => {
       <div id="openinghoursblock">
         <div className="openingandclose">
           <div className="openingheadline">
-            <h4>Öppenttider</h4>
+            <h4>Öppettider</h4>
           </div>
           <div id="openinghours">
             <ol className="info_list">
